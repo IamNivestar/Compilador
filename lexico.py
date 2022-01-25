@@ -21,8 +21,8 @@ class AnalisadorLexico():
         elif teste_numero == 6: arquivo_e = "input/teste_lexico/code6.txt"
         elif teste_numero == 7: arquivo_e = "input/teste_lexico/code7.txt"
         elif teste_numero == 8: arquivo_e = "input/teste_lexico/code8.txt"
-        elif teste_numero == 9: arquivo_e = "input/teste_lexico/code1_witherrors.txt"
-        elif teste_numero == 10: arquivo_e = "input/teste_lexico/code5_witherrors.txt"
+        elif teste_numero == 9: arquivo_e = "input/teste_lexico/code9_witherrors.txt"
+        elif teste_numero == 10: arquivo_e = "input/teste_lexico/code10_witherrors.txt"
         else: exit()
         print("\nSaida do compilador para o caso de teste arquivo: "+ str(arquivo_e) + " :\n")
         self.arquivo = arquivo_e    
