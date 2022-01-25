@@ -1,0 +1,14 @@
+program calc    	
+	var x,y z: real; 
+	var nome, endereco: string;
+	begin 
+		x = 3.5;
+		y := 2.4;
+		w := 100;
+		if x then
+		    z := x - y; 
+ 		end
+		erro := "apos a variavel x nao existe o token igual sem os dois pontos antes"
+ 		nome := "skdfkm23235FNFOWOF?"; 
+ 		endereco := "Rua Fulad_2 139, 234 #"; 
+	end 

@@ -1,0 +1,8 @@
+program Area_Circulo; 
+	var PI, area,comprimento,raio:real;
+	begin 
+		PI := 3.14;
+		raio:= 5.0;
+		area:= PI*raio*raio;
+		comprimento:=2.0*PI*raio;
+	end 	

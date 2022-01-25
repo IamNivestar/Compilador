@@ -1,0 +1,7 @@
+program Area; 
+	var base,altura,resultado: integer;
+	begin 
+		base:=10;
+		altura:=20;
+		resultado:=base*altura;
+	end 	

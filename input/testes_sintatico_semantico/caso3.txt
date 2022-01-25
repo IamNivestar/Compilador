@@ -1,0 +1,10 @@
+program nomes; 
+	var nomeCompleto, nome, sobrenome : string;
+	var input: integer;
+	begin 
+		nome := "Antonio ";
+		sobrenome:= "Nunes";
+		nomeCompleto := nome + sobrenome;
+		read input;
+		print input;
+	end 	

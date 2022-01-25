@@ -1,0 +1,26 @@
+program teste5; 
+	var flag: boolean;
+	var cont, input: integer; 
+    var x,y,z: real; 
+    var teste: string;     
+	begin 
+		cont := 0;
+		flag := true; 
+        x := 3.a7; 
+"erro espera-se real e o caractere a n e permitido ali"
+        y:= 0.45;      
+        teste := "Estou aqui"; 
+        print x / y;   
+        read input; 
+		while flag do 
+			cont := cont + 1;
+            if cont == flag then
+                z := x - y;
+                z := z/10 + 4 - 3;
+			end 
+			if cont != 10
+				"erro nao existe token diferente igual na linguagem P"
+				then flag := false; 
+			end             
+		end 
+	end 

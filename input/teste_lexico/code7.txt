@@ -1,0 +1,9 @@
+
+minha_variavel:=37777;
+        				y:= 23444.45;      
+ por mim   ; 
+        print x / y;   
+"amauryteste"
+			end             
+		end 
+	end 

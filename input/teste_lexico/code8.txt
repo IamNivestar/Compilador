@@ -1,0 +1,10 @@
+program program program prog2; 
+var var	var flag: boolean;
+	if con <= 2
+	if then menor >=25.46
+	e verdade esse teste
+			if cont > 10 
+				then flag := false; 
+			end             
+		end 
+	end 	

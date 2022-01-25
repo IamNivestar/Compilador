@@ -1,0 +1,8 @@
+program media_notas; 
+    var n1: real; 
+    var b := string;
+	begin 
+	b:= "isso vai dar erro";
+        n1:= 6.4 + b ;
+		print(b);
+	end 	

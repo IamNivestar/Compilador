@@ -1,0 +1,15 @@
+program prog2; 
+    var a, b ,c, d: boolean; 
+    var mensagem: string;     
+	begin 
+        b := false;
+        c := false;
+        d := true;
+        a:= b+c;
+        if a == b then
+            mensagem := "deu tudo certo";
+        end
+        if d != b then  
+            mensagem := "mudando valor";
+        end
+	end 	

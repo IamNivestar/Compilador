@@ -1,0 +1,15 @@
+if if if : boolean;
+	var cont, input: integer; 
+    var x,y,z,w: real; 
+    var testaa: string;     
+	begin 
+		cont := 0;
+		flag := true; 
+x:=3.7;
+        				y:= 0.45;      
+        teste := "outro teste criado por mim"; 
+        print x / y;   
+"amauryteste"
+			end             
+		end 
+	end 

@@ -1,0 +1,14 @@
+program prog6; 
+    var flag: boolean;  
+	var cont: integer; 
+	var x, y, z: real; 
+		cont := 0;  
+		y := 0.00005;
+		x := 1.0;
+        while flag do 
+			cont := cont + 1;
+		if flag then
+			z := y-x; 
+		end
+	end
+	end 	

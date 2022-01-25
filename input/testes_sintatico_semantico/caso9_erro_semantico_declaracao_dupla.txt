@@ -1,0 +1,6 @@
+program calc;   	
+	var x,y,z: real;
+    var x: string; 
+	begin 
+		
+	end 

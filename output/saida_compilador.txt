@@ -1,0 +1,21 @@
+Saida do compilador para o caso de teste arquivo: input/testes_sintatico_semantico/caso1.txt :
+
+PROGRAM reconhecido na entrada.
+ID reconhecido na entrada.
+PCOMMA reconhecido na entrada.
+VAR reconhecido na entrada.
+ID reconhecido na entrada.
+COMMA reconhecido na entrada.
+ID reconhecido na entrada.
+COMMA reconhecido na entrada.
+ID reconhecido na entrada.
+COLON reconhecido na entrada.
+Variavel x declarada com sucesso
+Variavel y declarada com sucesso
+Variavel z declarada com sucesso
+REAL reconhecido na entrada.
+PCOMMA reconhecido na entrada.
+BEGIN reconhecido na entrada.
+END reconhecido na entrada.
+EOF reconhecido na entrada.
+Fim da análise.

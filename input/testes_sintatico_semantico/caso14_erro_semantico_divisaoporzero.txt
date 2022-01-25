@@ -1,0 +1,10 @@
+program prog7; 
+
+	var x: integer; 
+	var a, b: real;
+	var d: boolean;
+	begin 
+		b:= 5.5;
+		d:=false;
+		a:= b/d;
+	end 

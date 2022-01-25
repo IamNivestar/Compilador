@@ -1,0 +1,16 @@
+program prog7; 
+    var escolha: boolean;  
+	var x: integer; 
+	var a, b, c: string;
+	begin 
+		escolha := true;
+		a := "kkk";
+		b := "bbbbb";
+		c := "cccccc";
+        while x <= 10 do
+			if escolha == true then
+				print a + b;
+	   	print x;
+		   x:= x - 1;
+			end 
+	end 

@@ -1,0 +1,9 @@
+program media_notas; 
+    var n1,n2,n3,media: real; 
+	begin 
+        n1:= 6.0;
+        n2:= 7.0;
+		n3:= 10.0;      
+        media:=(n1+n2)-n3/3;
+		print media;
+	end 	

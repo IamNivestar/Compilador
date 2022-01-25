@@ -1,0 +1,44 @@
+Saida do compilador para o caso de teste arquivo: input/testes_sintatico_semantico/caso14_erro_semantico_divisaoporzero.txt :
+
+PROGRAM reconhecido na entrada.
+ID reconhecido na entrada.
+PCOMMA reconhecido na entrada.
+VAR reconhecido na entrada.
+ID reconhecido na entrada.
+COLON reconhecido na entrada.
+Variavel x declarada com sucesso
+INTEGER reconhecido na entrada.
+PCOMMA reconhecido na entrada.
+VAR reconhecido na entrada.
+ID reconhecido na entrada.
+COMMA reconhecido na entrada.
+ID reconhecido na entrada.
+COMMA reconhecido na entrada.
+ID reconhecido na entrada.
+COLON reconhecido na entrada.
+Variavel a declarada com sucesso
+Variavel b declarada com sucesso
+Variavel c declarada com sucesso
+REAL reconhecido na entrada.
+PCOMMA reconhecido na entrada.
+VAR reconhecido na entrada.
+ID reconhecido na entrada.
+COLON reconhecido na entrada.
+Variavel d declarada com sucesso
+BOOLEAN reconhecido na entrada.
+PCOMMA reconhecido na entrada.
+BEGIN reconhecido na entrada.
+ID reconhecido na entrada.
+ATTR reconhecido na entrada.
+REAL_CONST reconhecido na entrada.
+PCOMMA reconhecido na entrada.
+ID reconhecido na entrada.
+ATTR reconhecido na entrada.
+FALSE reconhecido na entrada.
+PCOMMA reconhecido na entrada.
+ID reconhecido na entrada.
+ATTR reconhecido na entrada.
+ID reconhecido na entrada.
+DIV reconhecido na entrada.
+ID reconhecido na entrada.
+Erro semantico, operação de divisão com divisor nulo não permitida, linha 9
