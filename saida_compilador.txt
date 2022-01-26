@@ -63,7 +63,6 @@ ID reconhecido na entrada.
 PLUS reconhecido na entrada.
 ID reconhecido na entrada.
 PCOMMA reconhecido na entrada.
-END reconhecido na entrada.
 PRINT reconhecido na entrada.
 ID reconhecido na entrada.
 PCOMMA reconhecido na entrada.
@@ -75,5 +74,4 @@ INTEGER_CONST reconhecido na entrada.
 PCOMMA reconhecido na entrada.
 END reconhecido na entrada.
 END reconhecido na entrada.
-EOF reconhecido na entrada.
-Fim da análise.
+Erro sintático.EOF não esperado na entrada. Linha 0

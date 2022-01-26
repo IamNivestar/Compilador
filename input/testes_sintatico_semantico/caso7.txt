@@ -3,6 +3,7 @@ program prog7;
 	var x: integer; 
 	var a, b, c: string;
 	begin 
+		x := 5;
 		escolha := true;
 		a := "kkk";
 		b := "bbbbb";
@@ -10,6 +11,7 @@ program prog7;
         while x <= 10 do
 			if escolha == true then
 				print a + b;
+				end
 	   	print x;
 		   x:= x - 1;
 			end 

@@ -1,6 +1,8 @@
+import random
 from xmlrpc.client import Boolean
 from lexico import AnalisadorLexico
 from typing import Match
+import time
 
 class Token(object):
     def __init__(self, type, value, line):
@@ -171,13 +173,17 @@ def leitura(): #para ler entradas salvas que já passaram pelo lexico e foram fo
     else: exit()
     return arquivo_e
 
-def acrescentar_token(token_lido, lexema, n_linha):
-    global vetorTokensEntrada
-    for id_token, my_token in tokenNames.items():
-        if my_token == token_lido:
-            vetorTokensEntrada.append(Token(id_token, lexema, str(n_linha)))
+#funcoes auxiliares
 
-### funcoes de analise sintatica
+def printar_tabela_simbolos():
+    global vetorTokensEntrada
+    print("Debug: Printando tabela de simbolos")
+    lidos = []
+    for tok in vetorTokensEntrada:
+        if(tok.type == ID and tok.lexema not in lidos):
+            entrada = tabelaSimbolos.getEntry(tok.lexema)
+            lidos.append(tok.lexema)
+            print(tok.lexema + " valor:" + str(entrada.getRefvalor()) + " tipo: " + str(entrada.getTipo())  + " linha: " + str(entrada.getLinha()))
 
 def imprimeErro():
     global token, i, saida 
@@ -185,14 +191,20 @@ def imprimeErro():
     print('Erro sintático.' + token.str_type + ' não esperado na entrada. Linha ' + token.line)
     error_exit()
 
+def acrescentar_token(token_lido, lexema, n_linha):
+    global vetorTokensEntrada
+    for id_token, my_token in tokenNames.items():
+        if my_token == token_lido:
+            vetorTokensEntrada.append(Token(id_token, lexema, str(n_linha)))
+
 def error_exit():
+    printar_tabela_simbolos()
     global saida
     with open('saida_compilador.txt', 'w') as f:
         for item in saida:
             f.write("%s\n" % item)
     exit()
 
-import time
 def match(tok):
     time.sleep(TIME/2)
     global token, i, vetorTokensEntrada, saida
@@ -217,7 +229,24 @@ def variavel_esta_declarada(token):
         saida.append('Erro semântico, variavel' + token.lexema + ' não declarada. Linha ' + token.line)
         print('Erro semântico, variavel não declarada. Linha ' + token.line)
         error_exit()
-        
+
+def criar_variavel_temporaria(tipo, linha): 
+    global tabelaSimbolos
+    while True:
+        existente = False 
+        new_lexema = "temp" + str(random.randint(10000, 100000))
+        for t in vetorTokensEntrada:
+            if new_lexema == t.lexema:
+                existente = True
+        if (not existente):
+            break
+    
+    new_tok = Token(ID, new_lexema, linha)
+    entrada = TableEntry(new_tok, tipo, linha, None)
+    tabelaSimbolos.insertEntry(new_tok.lexema, entry=entrada)
+    print("Variável temporária para operação criada")
+    return new_tok
+
 def declarar_function(): 
     #optei por salvar o main na tabela de simbolos embora n fosse necessario pois não havera multiplas funções
     global tabelaSimbolos, token
@@ -255,9 +284,11 @@ def valor_compativel_variavel(variavel_tipo, tok):
             return True
     return False
 
-def salvando_constante(variavel, valor): #constanste do tipo x = 3.5
+def salvando_valor(variavel, valor): #constanste do tipo x = 3.5
     variavel_tipo = encontrar_tipo(variavel)
-    if ( valor_compativel_variavel(variavel_tipo, valor) ):
+    if(valor.type == ID):
+        return
+    elif( valor_compativel_variavel(variavel_tipo, valor) ):
         registrar_valor(variavel, valor.lexema)
     else:
         print('Erro semântico, a variavel '+ variavel.lexema + ' é do tipo ' + tokenNames[variavel_tipo] + ' e não do tipo ' + valor.str_type)
@@ -266,7 +297,7 @@ def salvando_constante(variavel, valor): #constanste do tipo x = 3.5
 
 def registrar_valor(tok, valor):
     global tabelaSimbolos, saida
-    if(tok == None or valor == None):
+    if(not tok or not valor):
         print('Erro interno no registro de valores, token ou valor nulos')
         error_exit()
     if(tabelaSimbolos.buscar(tok.lexema)):  
@@ -609,7 +640,10 @@ def operacao(variavel, op1, op2, operacao):
     tipo1 = encontrar_tipo(op1)
     tipo2 = encontrar_tipo(op2)
 
-    if(variavel.type == ID):
+    if( not variavel): #soma sem variavel destino
+        variavel = criar_variavel_temporaria(tipo1, op1.line)
+        tipo3 = tipo1
+    elif(variavel.type == ID):
         tipo3 = encontrar_tipo(variavel)
     else:
         tipo3 = None
@@ -634,8 +668,8 @@ def operacao(variavel, op1, op2, operacao):
                 registrar_valor(variavel, "\"" + temp1 + temp2 + "\"")
                 return variavel
             else:
-                print('Erro semantico, variável destino ' + variavel.lexema + ' possui tipo ' + tokenNames[tipo3] + ' enquanto o esperado era String, linha ' + variavel.line)
-                saida.append('Erro semantico, variável destino ' + variavel.lexema + ' possui tipo ' + tokenNames[tipo3] + ' enquanto o esperado era String, linha ' + variavel.line)
+                print('Erro semantico, variável destino ' + variavel.lexema + ' possui tipo ' + tokenNames[tipo3] + ' enquanto o esperado era String, linha ' + op1.line)
+                saida.append('Erro semantico, variável destino ' + variavel.lexema + ' possui tipo ' + tokenNames[tipo3] + ' enquanto o esperado era String, linha ' + op1.line)
                 error_exit()
         elif(tipo1 == STRING and tipo2 != STRING):
             print('Erro semantico, não é permitida a operacao ' + tokenNames[operacao] + ' com String, linha ' + op1.line)
@@ -651,8 +685,8 @@ def operacao(variavel, op1, op2, operacao):
         
     elif(operacao == DIV):
         if( encontrar_valor(op2)== 'false' or int( encontrar_valor(op2)) == 0):
-            print('Erro semantico, operação de divisão com divisor nulo não permitida, linha ' + variavel.line)
-            saida.append('Erro semantico, operação de divisão com divisor nulo não permitida, linha ' + variavel.line)
+            print('Erro semantico, operação de divisão com divisor nulo não permitida, linha ' + op1.line)
+            saida.append('Erro semantico, operação de divisão com divisor nulo não permitida, linha ' + op1.line)
             error_exit()
         return compatibilidade_ope(variavel, op1, op2, DIV, tipo1, tipo2, tipo3)
 
@@ -836,14 +870,14 @@ def RelOpc(variavel, valor):
     if(token.type == LT or token.type == LE or token.type == GT or token.type == GE):
         OpRel()
         if(valor and variavel):
-            #print("debug: "variavel.lexema, valor.lexema) ################################################
-            salvando_constante(variavel,valor)  #### salvando variavel valor
+            print("if debug: ", variavel.lexema, valor.lexema) ################################################
+            salvando_valor(variavel,valor)  
         valor = Adicao(variavel)
         RelOpc(valor, variavel)
     else:
         if(valor and variavel):
-            #print("debug: ", variavel.lexema, valor.lexema) ##############################################################333
-            salvando_constante(variavel,valor)   #### salvando variavel valor
+            print("else debug: ", variavel.lexema, valor.lexema) ##############################################################333
+            salvando_valor(variavel,valor)  
         return #VAZIO 
 
 def OpRel():
@@ -985,9 +1019,10 @@ if __name__ == '__main__':
     saida.append("Saida do compilador para o caso de teste arquivo: "+ str(lexico.arquivo) + " :\n")
     time.sleep(TIME)
     entrada = lexico.tokens_lista
+
+    print("Debug: Saida do Analisador Léxico, Tokens:\n") ####### debug
     for l in entrada:
-        #print("Debug: Saida do Analisador Léxico, Tokens:\n") #######
-        #print(l)
+        print(l)   ####### debug
         construcao_entrada(l)  
     time.sleep(TIME/2)
     
@@ -1006,11 +1041,6 @@ if __name__ == '__main__':
     print("Arquivo saida_compilador.txt salvo")
 
     print("\nDebug: Tabela de Simbolos:")  ###############################################
-    lidos = []
-    for tok in vetorTokensEntrada:
-        if(tok.type == ID and tok.lexema not in lidos):
-            entrada = tabelaSimbolos.getEntry(tok.lexema)
-            lidos.append(tok.lexema)
-            print(tok.lexema + " valor:" + str(entrada.getRefvalor()) + " tipo: " + str(entrada.getTipo())  + " linha: " + str(entrada.getLinha()))
-
+    
+    printar_tabela_simbolos()
 #fim
