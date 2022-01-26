@@ -66,6 +66,8 @@ ID              x              15
 PCOMMA          ;              15
 ID              x              16
 ATTR            :=             16
+INTEGER_CONST   2              16
+MULT            *              16
 ID              x              16
 MINUS           -              16
 INTEGER_CONST   1              16

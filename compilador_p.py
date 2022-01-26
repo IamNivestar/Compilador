@@ -183,7 +183,7 @@ def printar_tabela_simbolos():
         if(tok.type == ID and tok.lexema not in lidos):
             entrada = tabelaSimbolos.getEntry(tok.lexema)
             lidos.append(tok.lexema)
-            print(tok.lexema + " valor:" + str(entrada.getRefvalor()) + " tipo: " + str(entrada.getTipo())  + " linha: " + str(entrada.getLinha()))
+            print(tok.lexema + " valor: " + str(entrada.getRefvalor()) + " tipo: " + str(entrada.getTipo())  + " linha: " + str(entrada.getLinha()))
 
 def imprimeErro():
     global token, i, saida 
@@ -200,7 +200,7 @@ def acrescentar_token(token_lido, lexema, n_linha):
 def error_exit():
     printar_tabela_simbolos()
     global saida
-    with open('saida_compilador.txt', 'w') as f:
+    with open('output/saida_compilador.txt', 'w') as f:
         for item in saida:
             f.write("%s\n" % item)
     exit()
@@ -231,7 +231,7 @@ def variavel_esta_declarada(token):
         error_exit()
 
 def criar_variavel_temporaria(tipo, linha): 
-    global tabelaSimbolos
+    global tabelaSimbolos, vetorTokensEntrada
     while True:
         existente = False 
         new_lexema = "temp" + str(random.randint(10000, 100000))
@@ -240,11 +240,13 @@ def criar_variavel_temporaria(tipo, linha):
                 existente = True
         if (not existente):
             break
-    
-    new_tok = Token(ID, new_lexema, linha)
+        
+    new_tok = Token(0, new_lexema, linha)
     entrada = TableEntry(new_tok, tipo, linha, None)
     tabelaSimbolos.insertEntry(new_tok.lexema, entry=entrada)
-    print("Variável temporária para operação criada")
+    print("Variável temporária para operação criada: ", new_tok.lexema)
+    printar_tabela_simbolos()
+    vetorTokensEntrada.append(new_tok)
     return new_tok
 
 def declarar_function(): 
@@ -303,7 +305,7 @@ def registrar_valor(tok, valor):
     if(tabelaSimbolos.buscar(tok.lexema)):  
         entrada = tabelaSimbolos.getEntry(tok.lexema)
         entrada.setRefValor(valor)
-        #print('Debug: Variavel '+ tok.lexema + ' registrou o valor ' + str(valor))  ############################################################
+        #print('Debug: Variavel '+ tok.lexema + ' registrou o valor ' + str(valor))  #####
     else:
         print('Erro interno, variavel '+ tok.lexema + ' não encontrada ao registrar valor')
         saida.append('Erro interno, variavel '+ tok.lexema + ' não encontrada ao registrar valor')
@@ -320,8 +322,10 @@ def to_boolean(valor):
 
 def encontrar_valor(tok):
     global tabelaSimbolos, saida
-    
-    if(tok.type == ID): #é variavel ou constante?
+    if(not tok):
+        print("erro interno encontrar valor de variavel inexistente")
+        error_exit()
+    elif(tok.type == ID): #é variavel ou constante?
         if(tabelaSimbolos.buscar(tok.lexema)): 
             entrada = tabelaSimbolos.getEntry(tok.lexema)
             valor = entrada.getRefvalor()
@@ -340,7 +344,10 @@ def encontrar_valor(tok):
 def encontrar_tipo(tok):
     global tabelaSimbolos, saida
     tipo = None 
-    if(tok.type == ID): #é variavel ou constante?
+    if(not tok):
+        print("erro interno encontrar tipo de variavel inexistente")
+        error_exit()
+    elif(tok.type == ID): #é variavel ou constante?
         if(tabelaSimbolos.buscar(tok.lexema)):
             entrada = tabelaSimbolos.getEntry(tok.lexema)
             if(entrada.getTipo() == INTEGER):
@@ -993,7 +1000,7 @@ def Fator():
         return valor
     elif(token.type == LBRACKET):
         match(LBRACKET)
-        valor = Expr()
+        valor = Expr(None)
         match(RBRACKET)
         return valor
     else:
@@ -1020,9 +1027,9 @@ if __name__ == '__main__':
     time.sleep(TIME)
     entrada = lexico.tokens_lista
 
-    print("Debug: Saida do Analisador Léxico, Tokens:\n") ####### debug
+    #print("Debug: Saida do Analisador Léxico, Tokens:\n") ## debug
     for l in entrada:
-        print(l)   ####### debug
+        #print(l)   ## debug
         construcao_entrada(l)  
     time.sleep(TIME/2)
     

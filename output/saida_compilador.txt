@@ -69,6 +69,8 @@ ID reconhecido na entrada.
 PCOMMA reconhecido na entrada.
 ID reconhecido na entrada.
 ATTR reconhecido na entrada.
+INTEGER_CONST reconhecido na entrada.
+MULT reconhecido na entrada.
 ID reconhecido na entrada.
 MINUS reconhecido na entrada.
 INTEGER_CONST reconhecido na entrada.
